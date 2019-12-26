@@ -1,9 +1,7 @@
 package algo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
@@ -20,15 +18,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class LongestSubstringWithoutRepeatingCharacters {
     private static int lengthOfLongestSubstring(String s) {
-        int n = s.length(), ans = 0;
-        Map<Character, Integer> map = new HashMap<>(s.length());
-        for (int end = 0, start = 0; end < n; end++) {
-            char alpha = s.charAt(end);
-            if (map.containsKey(alpha)) {
-                start = Math.max(map.get(alpha) + 1, start);
+        int ans = 0, start = 0, end = 0;
+        // 每个字符 出现的最右位置
+        Map<Character, Integer> pos = new HashMap<>(s.length());
+
+        while(end < s.length()){
+            if (pos.containsKey(s.charAt(end))){
+                // 避免 start 往前移动 所以才需要比较
+                start = Math.max(pos.get(s.charAt(end)) + 1, start);
             }
+
             ans = Math.max(ans, end - start + 1);
-            map.put(s.charAt(end), end);
+            pos.put(s.charAt(end), end);
+            end++;
         }
 
         return ans;
