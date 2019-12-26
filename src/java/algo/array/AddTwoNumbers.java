@@ -1,4 +1,4 @@
-package algo;
+package algo.array;
 
 /**
  * 2数字相加

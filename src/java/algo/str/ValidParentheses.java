@@ -1,4 +1,4 @@
-package algo;
+package algo.str;
 
 import java.util.HashMap;
 import java.util.Stack;
