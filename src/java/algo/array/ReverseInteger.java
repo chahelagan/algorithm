@@ -25,6 +25,7 @@ package algo.array;
  * @date 2020-1-6
  */
 public class ReverseInteger {
+
     private int reverse(int x) {
         long num = 0;
         while (x != 0){
