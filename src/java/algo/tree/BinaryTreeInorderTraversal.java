@@ -37,7 +37,11 @@ public class BinaryTreeInorderTraversal {
                 root = root.left;
             } else {
                 resultList.add(root.val);
-                root = pre.right;
+                if (pre.right == null) {
+//                   resultList.add()
+                }else {
+                    root = pre.right;
+                }
             }
         }
 
@@ -59,8 +63,14 @@ public class BinaryTreeInorderTraversal {
         List<TreeNode> nodeList = new ArrayList<>();
         for (Integer node : nodes){
             TreeNode treeNode = new TreeNode(node);
+            nodeList.add(treeNode);
         }
-
+        for (int i = 0; i < nodes.length / 2 - 1; i++) {
+            nodeList.get(i).left = nodeList.get(2 * i + 1);
+            if (2 * i + 2 < nodes.length) {
+                nodeList.get(i).right = nodeList.get(2 * i + 2);
+            }
+        }
 
         return nodeList.get(0);
     }
