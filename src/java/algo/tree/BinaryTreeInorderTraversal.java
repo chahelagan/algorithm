@@ -21,23 +21,23 @@ import java.util.List;
  * @since 2020-1-8
  */
 public class BinaryTreeInorderTraversal {
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
         TreeNode(int x) { val = x; }
     }
 
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> resultList = new ArrayList<Integer>();
-        TreeNode pre = null;
+    private List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> resultList = new ArrayList<>();
+        TreeNode pre = root;
         while (root != null) {
             if (root.left != null) {
                 pre = root;
                 root = root.left;
             } else {
                 resultList.add(root.val);
-                root = pre;
+                root = pre.right;
             }
         }
 
@@ -45,6 +45,23 @@ public class BinaryTreeInorderTraversal {
     }
 
     public static void main(String[] args) {
+        Integer[] nodes = new Integer[]{3,9,20,null,null,15,7};
+        TreeNode root = BinaryTreeInorderTraversal.buildTree(nodes);
+        System.out.println(new BinaryTreeInorderTraversal().inorderTraversal(root));
+    }
 
+    /**
+     * build tree from array
+     * @param nodes nodes info
+     * @return tree root
+     */
+    private static TreeNode buildTree(Integer[] nodes){
+        List<TreeNode> nodeList = new ArrayList<>();
+        for (Integer node : nodes){
+            TreeNode treeNode = new TreeNode(node);
+        }
+
+
+        return nodeList.get(0);
     }
 }
