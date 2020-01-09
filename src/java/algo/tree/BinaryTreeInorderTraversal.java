@@ -82,6 +82,15 @@ public class BinaryTreeInorderTraversal {
         return resultList;
     }
 
+    /**
+     * 莫里斯中序遍历 todo
+     * @return result
+     */
+    private List<Integer> morrisTraverMid(TreeNode root){
+        List<Integer> resultList = new ArrayList<>();
+        return resultList;
+    }
+
     public static void main(String[] args) {
 //        int[] nodes = new int[]{1,0,2,3};
 //        TreeNode root = BinaryTreeInorderTraversal.buildTree(nodes);
