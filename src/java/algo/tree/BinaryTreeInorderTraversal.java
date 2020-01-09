@@ -2,6 +2,7 @@ package algo.tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Given a binary tree, return the inorder traversal of its nodes' values.
@@ -28,19 +29,52 @@ public class BinaryTreeInorderTraversal {
         TreeNode(int x) { val = x; }
     }
 
-    private List<Integer> inorderTraversal(TreeNode root) {
+    /**
+     * 不破坏树的结构
+     * @param root root
+     * @return result
+     */
+    public List <Integer> inorderTraversal(TreeNode root) {
+        List < Integer > res = new ArrayList < > ();
+        Stack < TreeNode > stack = new Stack < > ();
+        TreeNode curr = root;
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+            res.add(curr.val);
+            curr = curr.right;
+        }
+        return res;
+    }
+
+    /**
+     * 当发现单个变量满足不了要求的时候 是时候考虑引入数据结构了  破坏了树的结构
+     * @param root root
+     * @return result
+     */
+    private List<Integer> inorderTraversal2(TreeNode root) {
+        Stack<TreeNode> treeNodeStack = new Stack<>();
         List<Integer> resultList = new ArrayList<>();
-        TreeNode pre = root;
-        while (root != null) {
-            if (root.left != null) {
-                pre = root;
-                root = root.left;
+        TreeNode current = root;
+        while (current != null) {
+            if (current.left != null) {
+                treeNodeStack.push(current);
+                current = current.left;
             } else {
-                resultList.add(root.val);
-                if (pre.right == null) {
-//                   resultList.add()
+                resultList.add(current.val);
+                if (current.right == null) {
+                    if (treeNodeStack.isEmpty()){
+                        break;
+                    }
+                    TreeNode pre = treeNodeStack.pop();
+                    // 已经遍历过了 所以改了原有树的结构
+                    pre.left = null;
+                    current = pre;
                 }else {
-                    root = pre.right;
+                    current = current.right;
                 }
             }
         }
@@ -49,25 +83,30 @@ public class BinaryTreeInorderTraversal {
     }
 
     public static void main(String[] args) {
-        Integer[] nodes = new Integer[]{3,9,20,null,null,15,7};
-        TreeNode root = BinaryTreeInorderTraversal.buildTree(nodes);
+//        int[] nodes = new int[]{1,0,2,3};
+//        TreeNode root = BinaryTreeInorderTraversal.buildTree(nodes);
+        TreeNode root = new TreeNode(1);
+        root.left = null;
+        TreeNode node2 = new TreeNode(2);
+        root.right = node2;
+        node2.left = new TreeNode(3);
         System.out.println(new BinaryTreeInorderTraversal().inorderTraversal(root));
     }
 
     /**
      * build tree from array
-     * @param nodes nodes info
+     * @param nums nodes info
      * @return tree root
      */
-    private static TreeNode buildTree(Integer[] nodes){
+    private static TreeNode buildTree(int[] nums){
         List<TreeNode> nodeList = new ArrayList<>();
-        for (Integer node : nodes){
+        for (Integer node : nums){
             TreeNode treeNode = new TreeNode(node);
             nodeList.add(treeNode);
         }
-        for (int i = 0; i < nodes.length / 2 - 1; i++) {
+        for (int i = 0; i <= nums.length / 2 - 1; i++) {
             nodeList.get(i).left = nodeList.get(2 * i + 1);
-            if (2 * i + 2 < nodes.length) {
+            if (2 * i + 2 < nums.length) {
                 nodeList.get(i).right = nodeList.get(2 * i + 2);
             }
         }
