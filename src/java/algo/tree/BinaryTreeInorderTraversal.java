@@ -89,8 +89,8 @@ public class BinaryTreeInorderTraversal {
     private List<Integer> morrisTraverMid(TreeNode root){
         List<Integer> resultList = new ArrayList<>();
         TreeNode current = root;
-        TreeNode pre = root;
         TreeNode temp = root;
+        TreeNode pre = root;
         while (current != null){
             if (current.left == null){
                 resultList.add(current.val);
@@ -98,25 +98,64 @@ public class BinaryTreeInorderTraversal {
                 current = current.right;
             }else{
                 // has a left child
-                temp = current.left;
-                // find rightmost
-                while (temp.right != null){
-                    temp = temp.right;
+                pre = current.left;
+                // find rightmost 前驱node
+                while (pre.right != null){
+                    pre = pre.right;
                 }
                 // 设置 最右节点有孩子为当前节点
-                temp.right = current;
+                pre.right = current;
                 // 存储current node
-                pre = current;
+                temp = current;
                 // 移动current 到 新树的 root
                 current = current.left;
                 // 设置 原有 current 的左节点为null 避免死循环 破坏了原有树的结构
-                pre.left = null;
+                temp.left = null;
             }
         }
 
         return resultList;
     }
 
+    /**
+     * 莫里斯中序遍历 不破坏原有的树的结构
+     * https://www.jianshu.com/p/81fcd475a37b
+     * @return result
+     */
+    private List<Integer> morrisTraverMid2(TreeNode root){
+        List<Integer> resultList = new ArrayList<>();
+        TreeNode current = root;
+        TreeNode pre ;
+        while (current != null){
+            if (current.left == null){
+                resultList.add(current.val);
+                // move to next right node
+                current = current.right;
+            }else{
+                // has a left child
+                pre = current.left;
+                // find pre node
+                while (pre.right != null && pre.right != current){
+                    pre = pre.right;
+                }
+                // 设置 最右节点有孩子为当前节点
+                if (pre.right == null){
+                    pre.right = current;
+                    // 移动current 到 新树的 root
+                    current = current.left;
+                }
+
+                if (pre.right == current){
+                   // 复原结构
+                   pre.right = null;
+                   resultList.add(current.val);
+                   current = current.right;
+                }
+            }
+        }
+
+        return resultList;
+    }
     public static void main(String[] args) {
 //        int[] nodes = new int[]{1,0,2,3};
 //        TreeNode root = BinaryTreeInorderTraversal.buildTree(nodes);
