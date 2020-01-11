@@ -83,11 +83,37 @@ public class BinaryTreeInorderTraversal {
     }
 
     /**
-     * 莫里斯中序遍历 todo
+     * 莫里斯中序遍历
      * @return result
      */
     private List<Integer> morrisTraverMid(TreeNode root){
         List<Integer> resultList = new ArrayList<>();
+        TreeNode current = root;
+        TreeNode pre = root;
+        TreeNode temp = root;
+        while (current != null){
+            if (current.left == null){
+                resultList.add(current.val);
+                // move to next right node
+                current = current.right;
+            }else{
+                // has a left child
+                temp = current.left;
+                // find rightmost
+                while (temp.right != null){
+                    temp = temp.right;
+                }
+                // 设置 最右节点有孩子为当前节点
+                temp.right = current;
+                // 存储current node
+                pre = current;
+                // 移动current 到 新树的 root
+                current = current.left;
+                // 设置 原有 current 的左节点为null 避免死循环
+                pre.left = null;
+            }
+        }
+
         return resultList;
     }
 
@@ -99,7 +125,7 @@ public class BinaryTreeInorderTraversal {
         TreeNode node2 = new TreeNode(2);
         root.right = node2;
         node2.left = new TreeNode(3);
-        System.out.println(new BinaryTreeInorderTraversal().inorderTraversal(root));
+        System.out.println(new BinaryTreeInorderTraversal().morrisTraverMid(root));
     }
 
     /**
