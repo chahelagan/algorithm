@@ -83,7 +83,7 @@ public class BinaryTreeInorderTraversal {
     }
 
     /**
-     * 莫里斯中序遍历
+     * 莫里斯中序遍历 破坏了原有的树的结构
      * @return result
      */
     private List<Integer> morrisTraverMid(TreeNode root){
@@ -109,7 +109,7 @@ public class BinaryTreeInorderTraversal {
                 pre = current;
                 // 移动current 到 新树的 root
                 current = current.left;
-                // 设置 原有 current 的左节点为null 避免死循环
+                // 设置 原有 current 的左节点为null 避免死循环 破坏了原有树的结构
                 pre.left = null;
             }
         }
