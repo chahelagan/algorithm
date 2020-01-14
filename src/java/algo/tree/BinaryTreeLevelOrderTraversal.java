@@ -1,46 +1,40 @@
 package algo.tree;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
- * MaximumDepthOfBinaryTree
+ * 二叉树的层次遍历例如:
  *
- * 给定一个二叉树，找出其最大深度。
- *
- * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
- *
- * 说明: 叶子节点是指没有子节点的节点。
- *
- * 示例：
- * 给定二叉树 [3,9,20,null,null,15,7]，
+ * 给定二叉树: [3,9,20,null,null,15,7],
  *
  *     3
  *    / \
  *   9  20
  *     /  \
  *    15   7
- * 返回它的最大深度 3 。
+ * 返回其层次遍历结果：
  *
- * @author chahelagan
- * @since 2020-1-12
+ * [
+ *   [3],
+ *   [9,20],
+ *   [15,7]
+ * ]
+ *
+ * @author chahe
+ * @since 2020-1-14
  */
-public class MaximumDepthOfBinaryTree {
-    public static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
+public class BinaryTreeLevelOrderTraversal {
 
     /**
      * bfs
      * @param root root
-     * @return max depth
+     * @return result
      */
-    public int maxDepthBfs(TreeNode root){
-        int maxDepth = 0;
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> resultList = new LinkedList<>();
         if (root == null){
-            return maxDepth;
+            return resultList;
         }
         /*当前 level node count */
         int currentLevelNodeCount = 0;
@@ -53,9 +47,11 @@ public class MaximumDepthOfBinaryTree {
         // when has node to Traversal
         while (!treeNodeLinkedList.isEmpty()) {
             // current level nodes List
+            List<Integer> currentLevelNodes = new LinkedList<>();
             while (currentLevelNodeCount > 0) {
                 // get node from  queue
                 TreeNode current = treeNodeLinkedList.pollFirst();
+                currentLevelNodes.add(current.val);
                 currentLevelNodeCount--;
 
                 // push next level child to queue
@@ -69,27 +65,13 @@ public class MaximumDepthOfBinaryTree {
                 }
             }
 
-            maxDepth ++;
+            // add current level nodes to list
+            resultList.add(currentLevelNodes);
             // continue Traversal next level nodes
             currentLevelNodeCount = treeNodeLinkedList.size();
         }
 
-        return maxDepth;
-    }
-
-    /**
-     * bfs
-     * @param root root
-     * @return max depth
-     */
-    public int maxDepthDfs(TreeNode root){
-        int maxDepth = 0;
-        if (root == null){
-            return maxDepth;
-        }
-
-
-        return maxDepth;
+        return resultList;
     }
 
     public static void main(String[] args) {
@@ -99,6 +81,6 @@ public class MaximumDepthOfBinaryTree {
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
 
-        System.out.println(new MaximumDepthOfBinaryTree().maxDepthDfs(root));
+        System.out.println(new BinaryTreeLevelOrderTraversal().levelOrder(root));
     }
 }
