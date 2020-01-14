@@ -1,6 +1,10 @@
 package algo.tree;
 
+import javafx.util.Pair;
+
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * MaximumDepthOfBinaryTree
@@ -25,13 +29,6 @@ import java.util.LinkedList;
  * @since 2020-1-12
  */
 public class MaximumDepthOfBinaryTree {
-    public static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
-
     /**
      * bfs
      * @param root root
@@ -52,7 +49,6 @@ public class MaximumDepthOfBinaryTree {
 
         // when has node to Traversal
         while (!treeNodeLinkedList.isEmpty()) {
-            // current level nodes List
             while (currentLevelNodeCount > 0) {
                 // get node from  queue
                 TreeNode current = treeNodeLinkedList.pollFirst();
@@ -87,17 +83,48 @@ public class MaximumDepthOfBinaryTree {
         if (root == null){
             return maxDepth;
         }
+        Integer depth = 1;
+        Stack<Pair<TreeNode, Integer>> treeNodeLinkedList = new Stack<>();
+
+        TreeNode current = root;
+        while (current != null){
+            System.out.println(current.val);
+
+            if (current.left != null && current.right != null){
+                depth ++;
+                treeNodeLinkedList.add(new Pair<>(current.right, depth));
+                current = current.left;
+            }else if (current.left == null && current.right == null){
+                maxDepth = Math.max(maxDepth, depth);
+                if (treeNodeLinkedList.isEmpty()){
+                    break;
+                }else{
+                    Pair<TreeNode, Integer> treeNodeIntegerPair = treeNodeLinkedList.pop();
+                    current = treeNodeIntegerPair.getKey();
+                    depth = treeNodeIntegerPair.getValue();
+                }
+            }else{
+                if (current.left != null){
+                    depth ++;
+                    current = current.left;
+                }else{
+                    depth ++;
+                    current = current.right;
+                }
+            }
+        }
 
 
         return maxDepth;
     }
 
+
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(3);
-        root.left.left = new TreeNode(4);
-        root.left.right = new TreeNode(5);
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
 
         System.out.println(new MaximumDepthOfBinaryTree().maxDepthDfs(root));
     }
