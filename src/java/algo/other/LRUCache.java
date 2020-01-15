@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
- *
+ * lru cache
  * @author chahe
  * @since 2020-1-15
  */
