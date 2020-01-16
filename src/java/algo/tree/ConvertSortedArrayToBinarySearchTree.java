@@ -37,7 +37,7 @@ public class ConvertSortedArrayToBinarySearchTree {
     }
 
     /**
-     * Bfs
+     * Bfs 先new节点 后续赋值
      * @param nums nums
      * @return result
      */
