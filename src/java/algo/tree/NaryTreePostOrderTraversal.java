@@ -40,6 +40,7 @@ public class NaryTreePostOrderTraversal {
         list.addLast(root);
         while (!list.isEmpty()){
             Node current = list.pollLast();
+            // 双向链表就是好 直接add到最前面
             resultList.addFirst(current.val);
             for (Node child : current.children){
                 list.addLast(child);
