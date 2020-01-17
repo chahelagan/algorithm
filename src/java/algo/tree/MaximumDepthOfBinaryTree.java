@@ -73,7 +73,7 @@ public class MaximumDepthOfBinaryTree {
     }
 
     /**
-     * bfs
+     * dfs
      * @param root root
      * @return max depth
      */
