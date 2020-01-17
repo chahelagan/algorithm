@@ -28,14 +28,45 @@ import java.util.Stack;
  * @since 2020-1-16
  */
 public class MergeTwoBinaryTrees {
+    /**
+     * 同时遍历 返 t1
+     * @param t1
+     * @param t2
+     * @return
+     */
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null){
+            return t2;
+        }else if (t2 == null){
+            return t1;
+        }
+
+        // 2个都不为 null 才 push stack
         Stack<TreeNode[]> stack = new Stack<>();
         stack.push(new TreeNode[]{t1, t2});
+
         while (!stack.isEmpty()){
             TreeNode[] pop = stack.pop();
 
-            if (pop[0] != null && pop[2] != null){
-                pop[0].val = pop[0].val + pop[1].val;
+            //2个都不为 null 直接赋值给 tree1
+            pop[0].val = pop[0].val + pop[1].val;
+
+            // 2个都不为 null 才push stack
+            if (pop[0].left != null && pop[1].left != null){
+                stack.push(new TreeNode[]{pop[0].left, pop[1].left});
+            }
+            // 2个都不为null 才 push stack
+            if (pop[0].right != null && pop[1].right != null){
+                stack.push(new TreeNode[]{pop[0].right, pop[1].right});
+            }
+
+            // 本身tree1是null 就 让另一个成为自己的孩子
+            if (pop[0].left == null && pop[1].left != null){
+                pop[0].left = pop[1].left;
+            }
+            // 本身tree1是null 就 让另一个成为自己的孩子
+            if (pop[0].right == null && pop[1].right != null){
+                pop[0].right = pop[1].right;
             }
         }
 
@@ -43,16 +74,16 @@ public class MergeTwoBinaryTrees {
     }
 
     public static void main(String[] args) {
-//        TreeNode root1 = new TreeNode(1);
-//        root1.left = new TreeNode(3);
-//        root1.right = new TreeNode(2);
-//        root1.left.left = new TreeNode(5);
-//
-//        TreeNode root2 = new TreeNode(2);
-//        root2.left = new TreeNode(1);
-//        root2.right = new TreeNode(3);
-//        root2.left.right = new TreeNode(4);
-//        root2.right.right = new TreeNode(7);
+        TreeNode root1 = new TreeNode(1);
+        root1.left = new TreeNode(3);
+        root1.right = new TreeNode(2);
+        root1.left.left = new TreeNode(5);
+
+        TreeNode root2 = new TreeNode(2);
+        root2.left = new TreeNode(1);
+        root2.right = new TreeNode(3);
+        root2.left.right = new TreeNode(4);
+        root2.right.right = new TreeNode(7);
 
 
 //        TreeNode root1 = new TreeNode(1);
@@ -60,17 +91,17 @@ public class MergeTwoBinaryTrees {
 //        TreeNode root2 = new TreeNode(1);
 //        root2.left = new TreeNode(2);
 
-        TreeNode root1 = new TreeNode(1);
-        root1.left = new TreeNode(2);
-        root1.right = null;
-        root1.left.left = new TreeNode(3);
+//        TreeNode root1 = new TreeNode(1);
+//        root1.left = new TreeNode(2);
+//        root1.right = null;
+//        root1.left.left = new TreeNode(3);
+//
+//        TreeNode root2 = new TreeNode(1);
+//        root2.left = null;
+//        root2.right = new TreeNode(2);
+//        root2.right.left = null;
+//        root2.right.right = new TreeNode(3);
 
-        TreeNode root2 = new TreeNode(1);
-        root2.left = null;
-        root2.right = new TreeNode(2);
-        root2.right.left = null;
-        root2.right.right = new TreeNode(3);
-
-        new MergeTwoBinaryTrees().mergeTrees(root1, root2);
+        TreeNode node = new MergeTwoBinaryTrees().mergeTrees(root1, root2);
     }
 }
