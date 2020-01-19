@@ -4,9 +4,7 @@ import java.util.LinkedList;
 
 /**
  *　给定一个二叉树，检查它是否是镜像对称的。
- *
- * 例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
- *
+ *  例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
  *     1
  *    / \
  *   2   2
@@ -19,51 +17,38 @@ import java.util.LinkedList;
  *   2   2
  *    \   \
  *    3    3
- *
  * @author chahe
  * @since 2020-1-17
  */
 public class SymmetricTree {
-
-    /**
-     *
-     * @param root
-     * @return
-     */
     public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        /* 同时遍历*/
         LinkedList<TreeNode> nodes = new LinkedList<>();
         nodes.add(root);
-        nodes.add()
+        nodes.add(root);
 
         while (!nodes.isEmpty()){
-            while (currentLevelCount -- > 0){
-                TreeNode pop = nodes.pop();
-                if (pop != null){
-                    valueList.add(pop.val);
-                }else{
-                    valueList.add(null);
-                }
-
-                if (pop != null && (pop.left != null || pop.right != null)){
-                    if (pop.left != null){
-                        nodes.push(pop.left);
-                        nodes.push(null);
-                    }
-                    if (pop.right != null){
-                        nodes.push(null);
-                        nodes.push(pop.right);
-                    }
-                }
+            /* 要比较的2个节点必须在一起 不然会比较错误*/
+            TreeNode first = nodes.pollFirst();
+            TreeNode last = nodes.pollFirst();
+            /* 叶子节点会丢 2个null 进来 跳过即可*/
+            if (first == null && last == null) {
+                continue;
             }
-
-            for (int i = 0; i < valueList.size() / 2; i++) {
-                if (valueList.get(i) != valueList.get(valueList.size() - i)){
-
-                }
+            if (first == null || last == null){
+                return false;
             }
-
-            valueList.clear();
-            currentLevelCount = nodes.size();
+            if (first.val != last.val){
+                return false;
+            }
+            /* 已需要比较的顺序入队列*/
+            nodes.add(first.left);
+            nodes.add(last.right);
+            nodes.add(first.right);
+            nodes.add(last.left);
         }
 
         return true;
