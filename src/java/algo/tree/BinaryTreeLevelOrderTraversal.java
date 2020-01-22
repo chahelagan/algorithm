@@ -1,5 +1,6 @@
 package algo.tree;
 
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,6 +75,37 @@ public class BinaryTreeLevelOrderTraversal {
         return resultList;
     }
 
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> resultList = new LinkedList<>();
+        if (root == null){
+            return resultList;
+        }
+        LinkedList<LinkedList<Integer>> tempList = new LinkedList<>();
+        int currentLevelNodeCount = 0;
+        LinkedList<TreeNode> nodes = new LinkedList<>();
+        nodes.add(root);
+        currentLevelNodeCount ++;
+
+        while (!nodes.isEmpty()){
+            LinkedList currentLevelNodes = new LinkedList();
+            while (currentLevelNodeCount -- > 0){
+                TreeNode current = nodes.pop();
+                currentLevelNodes.add(current.val);
+
+                if (current.left != null){
+                    nodes.add(current.left);
+                }
+                if (current.right != null){
+                    nodes.add(current.right);
+                }
+            }
+            currentLevelNodeCount = nodes.size();
+            tempList.addFirst(currentLevelNodes);
+        }
+        resultList.addAll(tempList);
+
+        return resultList;
+    }
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
         root.left = new TreeNode(2);

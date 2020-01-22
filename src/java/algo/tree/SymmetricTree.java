@@ -44,7 +44,7 @@ public class SymmetricTree {
             if (first.val != last.val){
                 return false;
             }
-            /* 已需要比较的顺序入队列*/
+            /* 已需要比较的顺序入队列F*/
             nodes.add(first.left);
             nodes.add(last.right);
             nodes.add(first.right);
