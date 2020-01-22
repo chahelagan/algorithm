@@ -31,16 +31,9 @@ public class AddTwoNumbers {
         ListNode current;
         while(l1 != null || l2 != null){
             current = new ListNode(-1);
-            int resultValue = - 1;
-            int lvalue = (l1 != null) ? l1.val : -1;
-            int rvalue = (l2 != null) ? l2.val : -1;
-            if (lvalue == -1){
-                resultValue = rvalue;
-            }else if (rvalue == -1){
-                resultValue = lvalue;
-            }else{
-                resultValue = lvalue + rvalue;
-            }
+            int lvalue = (l1 != null) ? l1.val : 0;
+            int rvalue = (l2 != null) ? l2.val : 0;
+            int resultValue = lvalue + rvalue;
 
             //可能 89 + 1
             if (flag) {
@@ -71,6 +64,32 @@ public class AddTwoNumbers {
         if (flag){
             pre.next  = new ListNode(1);
         }
+        return result;
+    }
+
+    /**
+     * 如果不是逆序存储呢？长度不一样先不考虑了
+     * (3→4→2)+(4→6→5)=8→0→7
+     * @param l1 one
+     * @param l2 two
+     * @return result
+     */
+    private static ListNode addTwoNumbersNormalSeq(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode(0);
+
+        ListNode prev = result;
+
+        while (l1 != null && l2 != null){
+            int val = l1.val + l2.val;
+            if(val > 9){
+                prev.val += 1;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+             prev.next = new ListNode(val > 9 ? val-10 : val);
+            prev = prev.next;
+        }
+
         return result;
     }
 
