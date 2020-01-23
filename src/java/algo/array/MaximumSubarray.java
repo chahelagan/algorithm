@@ -10,7 +10,7 @@ package algo.array;
  * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
  * 进阶:
  *
- * 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。 todo
+ * 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
  *
  * @author chahe
  * @date 2020-1-3
@@ -22,6 +22,7 @@ public class MaximumSubarray {
         for (int num : nums) {
             partSum = partSum + num;
             sum = Math.max(sum, partSum);
+            // 只要 parsum < 0 这部分gg  否则 这部分还有机会成为最大子数组
             if (partSum < 0){
                 partSum = 0;
             }
