@@ -14,7 +14,7 @@ package algo.other;
  * 3	6	9
  *
  * 第5小的数字是 3 (1, 2, 2, 3, 3).
- * @author chahelagan
+ * @author chahelagan todo review
  * @since 2020-1-23
  */
 public class KthSmallestNumberInMultiplicationTable {
