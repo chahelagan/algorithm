@@ -30,6 +30,7 @@ import java.util.Stack;
 public class MaximumDepthOfBinaryTree {
     /**
      * bfs
+     * recommend
      * @param root root
      * @return max depth
      */
